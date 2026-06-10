@@ -179,6 +179,24 @@
       50%       { opacity: .45; }
     }
 
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      display: flex; background: var(--bg-inner);
+      border-radius: var(--pill); padding: 3px; gap: 2px;
+      border: 1.5px solid var(--border);
+    }
+    .lang-btn {
+      padding: 4px 13px; border: none; border-radius: var(--pill);
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .8rem;
+      cursor: pointer; transition: background var(--transition), color var(--transition);
+      background: transparent; color: var(--text-muted);
+    }
+    .lang-btn.active { background: var(--accent); color: #1A1612; }
+
+    /* ── LANGUAGE VISIBILITY ── */
+    body.lang-de .en { display: none !important; }
+    body.lang-en .de { display: none !important; }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -190,27 +208,39 @@
   </style>
 </head>
 
-<body data-theme="dark">
+<body data-theme="dark" class="lang-de">
 
 <header class="header">
   <div class="header-brand">Edwing</div>
-  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Farbschema wechseln">☀️</button>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('de')">DE</button>
+      <button class="lang-btn"        onclick="setLang('en')">EN</button>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Farbschema wechseln">☀️</button>
+  </div>
 </header>
 
 <main>
   <div class="hero">
-    <h1>Datenschutzerklärungen</h1>
-    <p class="hero-sub">Nathan Geiger · Edwing</p>
+    <h1 class="de">Datenschutzerklärungen</h1>
+    <h1 class="en">Privacy Policies</h1>
+    <p class="hero-sub de">Nathan Geiger · Edwing</p>
+    <p class="hero-sub en">Nathan Geiger · Edwing</p>
   </div>
 
   <div class="card">
-    <div class="eyebrow">Datenschutzerklärungen</div>
-    <p id="status">Lade Dateiliste …</p>
+    <div class="eyebrow de">Datenschutzerklärungen</div>
+    <div class="eyebrow en">Privacy Policies</div>
+    <p id="status"><span class="de">Lade Dateiliste …</span><span class="en">Loading …</span></p>
     <ul id="file-list" aria-live="polite"></ul>
   </div>
 </main>
 
-<footer>Edwing · Datenschutzerklärungen · edding-cc / Datenschutzerklaerungen</footer>
+<footer>
+  <span class="de">Edwing · Datenschutzerklärungen · edding-cc / Datenschutzerklaerungen</span>
+  <span class="en">Edwing · Privacy Policies · edding-cc / Datenschutzerklaerungen</span>
+</footer>
 
 <script>
   const OWNER = 'edding-cc';
@@ -226,6 +256,17 @@
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   document.body.dataset.theme = prefersDark ? 'dark' : 'light';
   document.getElementById('themeBtn').textContent = prefersDark ? '☀️' : '🌙';
+
+  function setLang(lang) {
+    document.body.classList.remove('lang-de', 'lang-en');
+    document.body.classList.add('lang-' + lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    document.title = lang === 'de'
+      ? 'Datenschutzerklärungen – Nathan Geiger'
+      : 'Privacy Policies – Nathan Geiger';
+  }
 
   function toggleTheme() {
     const dark = document.body.dataset.theme === 'dark';
@@ -273,11 +314,13 @@
       listEl.innerHTML = '';
 
       if (!htmls.length) {
-        statusEl.textContent = 'Keine Datenschutzerklärungen gefunden.';
+        statusEl.innerHTML = '<span class="de">Keine Datenschutzerklärungen gefunden.</span><span class="en">No privacy policies found.</span>';
         return;
       }
 
-      statusEl.textContent = `${htmls.length} Datenschutzerklärung${htmls.length !== 1 ? 'e' : ''} verfügbar`;
+      const de = `${htmls.length} Datenschutzerklärung${htmls.length !== 1 ? 'en' : ''} verfügbar`;
+      const en = `${htmls.length} privacy polic${htmls.length !== 1 ? 'ies' : 'y'} available`;
+      statusEl.innerHTML = `<span class="de">${de}</span><span class="en">${en}</span>`;
 
       htmls.forEach((file, i) => {
         const li = document.createElement('li');
@@ -294,7 +337,7 @@
 
     } catch (err) {
       listEl.innerHTML = '';
-      statusEl.textContent = err.message;
+      statusEl.innerHTML = `<span class="de">${err.message}</span><span class="en">${err.message}</span>`;
       statusEl.className = 'error';
     }
   }
