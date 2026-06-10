@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerklärungen – Übersicht</title>
+  <style>
+    :root {
+      --bg: #f8f8f6;
+      --surface: #ffffff;
+      --border: #e2e2dc;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --accent: #1a4f8a;
+      --accent-light: #eef3fa;
+      --accent-hover: #133d6e;
+      --error: #c0392b;
+      --radius: 6px;
+      --font-body: 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .repo-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid #c5d8f0;
+      border-radius: var(--radius);
+      padding: 0.3rem 0.7rem;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    #status {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      min-height: 1.4em;
+    }
+
+    #status.error {
+      color: var(--error);
+    }
+
+    .file-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .file-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .file-item:hover {
+      border-color: #a8c4e8;
+      box-shadow: 0 2px 8px rgba(26, 79, 138, 0.08);
+    }
+
+    .file-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .file-item a:hover {
+      color: var(--accent-hover);
+    }
+
+    .file-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      opacity: 0.6;
+    }
+
+    .file-name {
+      flex: 1;
+    }
+
+    .file-size {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, #ebebeb 25%, #f5f5f5 50%, #ebebeb 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: var(--radius);
+      height: 52px;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    #last-updated { font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">GitHub Repository</p>
+  <h1>Datenschutzerklärungen</h1>
+  <p class="subtitle">Alle verfügbaren HTML-Dokumente auf einen Blick</p>
+  <div class="repo-info">
+    <span>📁</span>
+    <span>edding-cc / Datenschutzerklaerungen</span>
+  </div>
+</header>
+
+<main>
+  <p id="status">Lade Dateiliste …</p>
+  <ul class="file-list" id="file-list" aria-live="polite"></ul>
+</main>
+
+<footer>
+  <span>Automatisch generiert via GitHub Contents API</span>
+  <span id="last-updated"></span>
+</footer>
+
+<script>
+  const OWNER = 'edding-cc';
+  const REPO  = 'Datenschutzerklaerungen';
+  const PATH  = '';  // Leer = Root; bei Unterordner z.B. 'ordner/unterordner'
+  const THIS  = 'index.html';
+
+  const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`;
+  const PAGES_BASE = `https://${OWNER}.github.io/${REPO}/`;
+
+  const statusEl   = document.getElementById('status');
+  const listEl     = document.getElementById('file-list');
+  const updatedEl  = document.getElementById('last-updated');
+
+  function formatSize(bytes) {
+    if (!bytes) return '';
+    if (bytes < 1024) return `${bytes} B`;
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  }
+
+  function showSkeletons(n = 4) {
+    listEl.innerHTML = Array.from({ length: n })
+      .map(() => `<li class="skeleton"></li>`)
+      .join('');
+  }
+
+  async function loadFiles() {
+    showSkeletons();
+    try {
+      const res = await fetch(API_URL, {
+        headers: { Accept: 'application/vnd.github.v3+json' }
+      });
+
+      if (!res.ok) {
+        const remaining = res.headers.get('X-RateLimit-Remaining');
+        if (res.status === 403 && remaining === '0') {
+          throw new Error('GitHub API Rate-Limit erreicht (60 Req/h). Bitte später erneut versuchen.');
+        }
+        if (res.status === 404) {
+          throw new Error('Repository nicht gefunden oder privat.');
+        }
+        throw new Error(`GitHub API Fehler: ${res.status}`);
+      }
+
+      const files = await res.json();
+      const htmlFiles = files.filter(f =>
+        f.type === 'file' &&
+        f.name.toLowerCase().endsWith('.html') &&
+        f.name.toLowerCase() !== THIS
+      );
+
+      listEl.innerHTML = '';
+
+      if (htmlFiles.length === 0) {
+        listEl.innerHTML = `<li class="empty">Keine weiteren HTML-Dateien im Repository gefunden.</li>`;
+        statusEl.textContent = 'Keine Dateien gefunden.';
+        return;
+      }
+
+      htmlFiles
+        .sort((a, b) => a.name.localeCompare(b.name, 'de'))
+        .forEach(file => {
+          const url = `${PAGES_BASE}${file.name}`;
+          const li = document.createElement('li');
+          li.className = 'file-item';
+          li.innerHTML = `
+            <a href="${url}" target="_blank" rel="noopener">
+              <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span class="file-name">${file.name}</span>
+              <span class="file-size">${formatSize(file.size)}</span>
+              <span class="arrow">↗</span>
+            </a>`;
+          listEl.appendChild(li);
+        });
+
+      statusEl.textContent = `${htmlFiles.length} Dokument${htmlFiles.length !== 1 ? 'e' : ''} gefunden`;
+      updatedEl.textContent = `Stand: ${new Date().toLocaleString('de-DE')}`;
+
+    } catch (err) {
+      listEl.innerHTML = '';
+      statusEl.textContent = err.message;
+      statusEl.className = 'error';
+    }
+  }
+
+  loadFiles();
+</script>
+
+</body>
+</html>
