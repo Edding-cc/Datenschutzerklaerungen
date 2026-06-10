@@ -204,7 +204,7 @@
   </div>
 
   <div class="card">
-    <div class="eyebrow">Dokumente</div>
+    <div class="eyebrow">Datenschutzerklärungen</div>
     <p id="status">Lade Dateiliste …</p>
     <ul id="file-list" aria-live="polite"></ul>
   </div>
@@ -273,11 +273,11 @@
       listEl.innerHTML = '';
 
       if (!htmls.length) {
-        statusEl.textContent = 'Keine HTML-Dokumente gefunden.';
+        statusEl.textContent = 'Keine Datenschutzerklärungen gefunden.';
         return;
       }
 
-      statusEl.textContent = `${htmls.length} Dokument${htmls.length !== 1 ? 'e' : ''} verfügbar`;
+      statusEl.textContent = `${htmls.length} Datenschutzerklärung${htmls.length !== 1 ? 'e' : ''} verfügbar`;
 
       htmls.forEach((file, i) => {
         const li = document.createElement('li');
