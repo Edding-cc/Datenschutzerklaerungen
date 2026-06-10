@@ -4,209 +4,213 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Datenschutzerklärungen – Nathan Geiger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafaf8;
-      --ink: #111111;
-      --muted: #888880;
-      --line: #e0e0d8;
-      --accent: #111111;
-      --hover-bg: #f0f0ec;
-      --font: 'Georgia', 'Times New Roman', serif;
-      --font-ui: 'Helvetica Neue', Arial, sans-serif;
+      --accent:        #F5BF2A;
+      --accent-bg:     rgba(245,191,42,.13);
+      --accent-border: rgba(245,191,42,.32);
+      --radius:        16px;
+      --radius-sm:     10px;
+      --pill:          100px;
+      --transition:    .25s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [data-theme="dark"] {
+      --bg:          #161210;
+      --bg-card:     #222018;
+      --bg-inner:    #1A1814;
+      --bg-tag:      #2C2820;
+      --text:        #EDE8DC;
+      --text-muted:  #8A8070;
+      --border:      #36302A;
+    }
+    [data-theme="light"] {
+      --bg:          #F0EAE0;
+      --bg-card:     #E6E0D4;
+      --bg-inner:    #DDD7CA;
+      --bg-tag:      #D4CFC4;
+      --text:        #1A1612;
+      --text-muted:  #7A7068;
+      --border:      #C8C2B6;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-family: 'Nunito', sans-serif;
       background: var(--bg);
-      color: var(--ink);
-      font-family: var(--font-ui);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 4rem 2rem 6rem;
+    /* ── HEADER ── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-card);
+      border-bottom: 1.5px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      backdrop-filter: blur(6px);
+    }
+    .header-brand {
+      font-size: 1rem; font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -.01em;
+    }
+    .theme-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--bg-inner);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; transition: border-color var(--transition);
+    }
+    .theme-btn:hover { border-color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 780px; margin: 0 auto;
+      padding: 20px 14px 60px;
+    }
+    @media(min-width:600px)  { main { padding: 28px 20px 72px; } }
+    @media(min-width:900px)  { main { padding: 36px 24px 80px; } }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 28px 16px 28px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 900; letter-spacing: -.02em;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: .85rem; color: var(--text-muted); font-weight: 600;
     }
 
-    .masthead {
-      border-bottom: 2px solid var(--ink);
-      padding-bottom: 1.25rem;
-      margin-bottom: 0.5rem;
+    /* ── CARD ── */
+    .card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px 20px;
+      margin-bottom: 14px;
     }
 
-    .masthead-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      margin-bottom: 0.6rem;
+    .eyebrow {
+      font-size: .68rem; font-weight: 900;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px;
     }
 
-    .masthead h1 {
-      font-family: var(--font);
-      font-size: 2rem;
-      font-weight: normal;
-      letter-spacing: -0.01em;
-      line-height: 1.15;
-      color: var(--ink);
+    /* ── STATUS ── */
+    #status {
+      font-size: .85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+      min-height: 1.2em;
     }
+    #status.error { color: #d4604a; }
 
-    .masthead h1 span {
-      font-style: italic;
-    }
-
-    .meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.6rem 0 1.8rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 2rem;
-    }
-
-    #count-label { font-variant-numeric: tabular-nums; }
-
-    #file-list {
-      list-style: none;
-    }
+    /* ── FILE LIST ── */
+    #file-list { list-style: none; }
 
     .file-item {
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1.5px solid var(--border);
     }
-
-    .file-item:first-child {
-      border-top: 1px solid var(--line);
-    }
+    .file-item:first-child { border-top: 1.5px solid var(--border); }
 
     .file-item a {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.95rem 0.25rem;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 4px;
       text-decoration: none;
-      color: var(--ink);
-      transition: background 0.1s;
+      color: var(--text);
+      font-weight: 700;
+      font-size: .95rem;
+      transition: color var(--transition);
     }
+    .file-item a:hover { color: var(--accent); }
+    .file-item a:hover .doc-arrow { color: var(--accent); }
 
-    .file-item a:hover {
-      background: var(--hover-bg);
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      margin-left: -0.5rem;
-      margin-right: -0.5rem;
-    }
-
-    .doc-number {
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      min-width: 1.5rem;
+    .doc-num {
+      font-size: .72rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      min-width: 1.8rem;
       flex-shrink: 0;
-      font-variant-numeric: tabular-nums;
     }
-
     .doc-name {
       flex: 1;
-      font-family: var(--font);
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--ink);
+      font-style: normal;
     }
-
     .doc-arrow {
-      font-size: 0.75rem;
-      color: var(--muted);
+      font-size: .85rem;
+      color: var(--text-muted);
       flex-shrink: 0;
-      transition: transform 0.15s;
+      transition: color var(--transition), transform var(--transition);
     }
-
     .file-item a:hover .doc-arrow {
       transform: translateX(3px);
     }
 
-    .skeleton-item {
-      border-bottom: 1px solid var(--line);
-      padding: 0.95rem 0.25rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    /* ── SKELETON ── */
+    .sk-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 4px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .sk-item:first-child { border-top: 1.5px solid var(--border); }
+    .sk-bar {
+      height: 13px; border-radius: 6px;
+      background: var(--bg-tag);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .45; }
     }
 
-    .skeleton-bar {
-      height: 14px;
-      background: linear-gradient(90deg, #e8e8e4 25%, #f2f2ee 50%, #e8e8e4 75%);
-      background-size: 300% 100%;
-      animation: sh 1.4s infinite;
-      border-radius: 2px;
-    }
-
-    @keyframes sh {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .status-msg {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-family: var(--font-ui);
+    /* ── FOOTER ── */
+    footer {
       text-align: center;
-      padding: 3rem 0;
-    }
-
-    .status-msg.error {
-      color: #a03030;
-    }
-
-    .footer {
-      margin-top: 3.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--font-ui);
-      letter-spacing: 0.04em;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    @media (max-width: 480px) {
-      .page { padding: 2.5rem 1.25rem 4rem; }
-      .masthead h1 { font-size: 1.5rem; }
+      padding: 20px 16px 28px;
+      border-top: 1.5px solid var(--border);
+      color: var(--text-muted);
+      font-size: .8rem; font-weight: 600;
     }
   </style>
 </head>
-<body>
-<div class="page">
 
-  <header class="masthead">
-    <p class="masthead-label">Datenschutzerklärungen</p>
-    <h1>Nathan Geiger</h1>
-  </header>
+<body data-theme="dark">
 
-  <div class="meta-row">
-    <span id="count-label">Lade …</span>
-    <span id="updated-label"></span>
+<header class="header">
+  <div class="header-brand">Edwing</div>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Farbschema wechseln">☀️</button>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Datenschutzerklärungen</h1>
+    <p class="hero-sub">Nathan Geiger · Edwing</p>
   </div>
 
-  <ul id="file-list" aria-live="polite"></ul>
+  <div class="card">
+    <div class="eyebrow">Dokumente</div>
+    <p id="status">Lade Dateiliste …</p>
+    <ul id="file-list" aria-live="polite"></ul>
+  </div>
+</main>
 
-  <footer class="footer">
-    <span>Edwing · GitHub Pages</span>
-    <span>edding-cc / Datenschutzerklaerungen</span>
-  </footer>
-
-</div>
+<footer>Edwing · Datenschutzerklärungen · edding-cc / Datenschutzerklaerungen</footer>
 
 <script>
   const OWNER = 'edding-cc';
@@ -215,22 +219,33 @@
   const THIS  = 'index.html';
   const BASE  = `https://${OWNER}.github.io/${REPO}/`;
 
-  const listEl    = document.getElementById('file-list');
-  const countEl   = document.getElementById('count-label');
-  const updatedEl = document.getElementById('updated-label');
+  const listEl   = document.getElementById('file-list');
+  const statusEl = document.getElementById('status');
 
-  function skeletons(n) {
-    listEl.innerHTML = '';
-    for (let i = 0; i < n; i++) {
-      const li = document.createElement('li');
-      li.className = 'skeleton-item';
-      li.innerHTML = `<div class="skeleton-bar" style="width:2rem"></div><div class="skeleton-bar" style="flex:1;max-width:${180 + Math.random()*160|0}px"></div>`;
-      listEl.appendChild(li);
-    }
+  // Theme
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.body.dataset.theme = prefersDark ? 'dark' : 'light';
+  document.getElementById('themeBtn').textContent = prefersDark ? '☀️' : '🌙';
+
+  function toggleTheme() {
+    const dark = document.body.dataset.theme === 'dark';
+    document.body.dataset.theme = dark ? 'light' : 'dark';
+    document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
   }
 
   function stripExt(name) {
     return name.replace(/\.html?$/i, '');
+  }
+
+  function skeletons(n) {
+    listEl.innerHTML = '';
+    const widths = [140, 190, 160, 175, 150];
+    for (let i = 0; i < n; i++) {
+      const li = document.createElement('li');
+      li.className = 'sk-item';
+      li.innerHTML = `<div class="sk-bar" style="width:1.5rem"></div><div class="sk-bar" style="width:${widths[i % widths.length]}px"></div>`;
+      listEl.appendChild(li);
+    }
   }
 
   async function load() {
@@ -247,7 +262,7 @@
           throw new Error('GitHub API Rate-Limit erreicht (60/h) – bitte später versuchen.');
         if (res.status === 404)
           throw new Error('Repository nicht gefunden oder privat.');
-        throw new Error(`GitHub API: ${res.status}`);
+        throw new Error(`GitHub API Fehler: ${res.status}`);
       }
 
       const files = await res.json();
@@ -258,31 +273,29 @@
       listEl.innerHTML = '';
 
       if (!htmls.length) {
-        listEl.innerHTML = `<li><p class="status-msg">Keine weiteren HTML-Dokumente gefunden.</p></li>`;
-        countEl.textContent = '0 Dokumente';
+        statusEl.textContent = 'Keine HTML-Dokumente gefunden.';
         return;
       }
+
+      statusEl.textContent = `${htmls.length} Dokument${htmls.length !== 1 ? 'e' : ''} verfügbar`;
 
       htmls.forEach((file, i) => {
         const li = document.createElement('li');
         li.className = 'file-item';
-        const url = BASE + file.name;
         const label = stripExt(file.name);
         li.innerHTML = `
-          <a href="${url}">
-            <span class="doc-number">${String(i + 1).padStart(2, '0')}</span>
+          <a href="${BASE}${file.name}">
+            <span class="doc-num">${String(i + 1).padStart(2, '0')}</span>
             <span class="doc-name">${label}</span>
             <span class="doc-arrow">→</span>
           </a>`;
         listEl.appendChild(li);
       });
 
-      countEl.textContent = `${htmls.length} Dokument${htmls.length !== 1 ? 'e' : ''}`;
-      updatedEl.textContent = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-
     } catch (err) {
-      listEl.innerHTML = `<li><p class="status-msg error">${err.message}</p></li>`;
-      countEl.textContent = 'Fehler beim Laden';
+      listEl.innerHTML = '';
+      statusEl.textContent = err.message;
+      statusEl.className = 'error';
     }
   }
 
