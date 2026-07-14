@@ -329,6 +329,12 @@
     <p class="en">Entering your own data (as delivery person) is not required.</p>
     <p class="de">Deine Daten werden erst bei deinstallation der App oder anderer Art manueller Datenlöschung entfernt.</p>
     <p class="en">Your data will only be deletet in case of deinstallation of the App or any other type of manual data deletion.</p>
+
+    <h2 class="de">Export deiner Daten</h2>
+    <h2 class="en">Exporting your data</h2>
+
+    <p class="de">Du kannst deine Daten selbst exportieren – aber nur, wenn du das ausdrücklich auswählst. Der Export erfolgt auf einen <strong>lokalen Datenträger</strong>, wahlweise als ZIP-, RP- oder LT-Datei. Was du so exportierst, liegt danach in deiner Verantwortung.</p>
+    <p class="en">You can export your data yourself — but only if you explicitly choose to do so. The export is saved to a <strong>local storage medium</strong>, optionally as a ZIP, RP, or LT file. You are responsible for the data once it has been exported.</p>
   </div>
 
   <!-- 4 · DRITTANBIETER -->
@@ -337,8 +343,7 @@
     <div class="eyebrow en">Optional Network Features</div>
 
     <h2 class="de">Wann werden Daten übertragen?</h2>
-    <h1 class="en">When is data transmitted?</h1>
-    <h3 class="en">When is data transmitted?</h3>
+    <h2 class="en">When is data transmitted?</h2>
     
     <p class="de">Der Anbieter (Edwing) hat auf diese Daten keinen Zugriff. Sie bleiben lokal auf deinem Gerät. Nur wenn du sie selbst aktiv bereitstellst (z. B. zur Fehlersuche sendest), kann der Anbieter sie sehen.</p>
     <p class="en">The provider (Edwing) does not have access to this data. It remains locally on your device. The provider can only see it if you actively share it yourself (e.g., by sending it for troubleshooting purposes).</p>
@@ -348,7 +353,7 @@
     <!-- OSM -->
     <div class="tp-item">
       <span class="badge opt">Optional</span>
-      <div class="tp-name">🗺️ OpenStreetMap – Kartenansicht &amp; Adresssortierung</div>
+      <div class="tp-name">OpenStreetMap – Kartenansicht &amp; Adresssortierung</div>
       <p class="tp-desc de">Wenn du die Kartenansicht oder die OSM-basierte Adresssortierung verwendest, lädt EasyTour Kartendaten von den Servern der OpenStreetMap Foundation herunter. Dabei wird deine <strong>IP-Adresse</strong> an die OSM-Server übertragen. Deine Adressdaten werden lokal auf deinem Gerät verarbeitet und nicht an OSM weitergegeben. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung durch Aktivierung der Funktion).</p>
       <p class="tp-desc en">When you use the map view or OSM-based address sorting, EasyTour downloads map data from servers of the OpenStreetMap Foundation. Your <strong>IP address</strong> is transmitted to the OSM servers. Your address data is processed locally on your device and is not shared with OSM. Legal basis: Art. 6(1)(a) GDPR (consent by enabling the feature).</p>
       <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener" class="de">Datenschutzerklärung der OSMF →</a>
@@ -358,11 +363,23 @@
     <!-- Google Maps -->
     <div class="tp-item">
       <span class="badge opt">Optional</span>
-      <div class="tp-name">📍 Maps – Adress-Link</div>
+      <div class="tp-name">Maps – Adress-Link</div>
       <p class="tp-desc de">Wenn du die Einstellung <em>„Maps-Link"</em> aktivierst, öffnet das Antippen einer Adresse eine von dir ausgewählte und installierte Karten App mit der entsprechenden Adresse als Suchbegriff. Dabei werden die <strong>Adressdaten</strong> sowie deine <strong>IP-Adresse</strong> an den entsprechenden Anbieter übermittelt. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung durch Aktivierung der Funktion).</p>
       <p class="tp-desc en">If you enable the <em>"Maps link"</em> setting, tapping an address opens a installed and app chosen by you with that address as a search query. Your <strong>address data</strong> and <strong>IP address</strong> are transmitted to the Provider of the specific App. Legal basis: Art. 6(1)(a) GDPR (consent by enabling the feature).</p>
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="de">(im Falle von Google Maps: Google Datenschutzerklärung → )</a>
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="en">(In case of Google Maps: Google Privacy Policy →)</a>
+    </div>
+    <!-- Analytics -->
+    <div class="tp-item">
+      <div class="tp-name">Technische Daten (Geräte-Kennung, Absturzberichte)</div>
+      <p class="tp-desc de">Die App selbst enthält <strong>keine</strong> Analyse-, Telemetrie- oder Crash-Reporting-Bibliothek (kein Firebase Crashlytics, kein Analytics).</p>
+      <p class="tp-desc en">The app itself contains <strong>no</strong> analytics, telemetry, or crash reporting libraries (no Firebase Crashlytics, no Analytics).</p>      <p class="tp-desc de"></p>
+      <p class="tp-desc de">Eine Geräte-Kennung sowie Absturz- und Fehlerberichte können jedoch auf Ebene deines Geräts (Android) und des Google Play Stores entstehen. Google kann daraus zusammengefasste Absturzberichte bereitstellen, damit Fehler erkannt und behoben werden.</p>
+      <p class="tp-desc en">However, a device identifier as well as crash and error reports may be generated at the level of your device (Android) and the Google Play Store. Google may provide aggregated crash reports based on this data so that errors can be detected and fixed.</p>      <p class="tp-desc de">Für diese Verarbeitung ist <strong>Google verantwortlich</strong>; es gelten die Datenschutzbestimmungen von Google. Der Anbieter (Edwing) erhält allenfalls zusammengefasste Berichte über die Play Console.</p>
+      <p class="tp-desc de">Für diese Verarbeitung ist <strong>Google verantwortlich</strong>; es gelten die Datenschutzbestimmungen von Google. Der Anbieter (Edwing) erhält allenfalls zusammengefasste Berichte über die Play Console.</p>
+      <p class="tp-desc en"><strong>Google is responsible</strong> for this processing; Google’s privacy policy applies. The provider (Edwing) receives, at most, aggregated reports via the Play Console.</p>
+      <p class="tp-desc de">Ein Tracking deines Nutzungsverhaltens findet <strong>nicht</strong> statt.</p>
+      <p class="tp-desc en">Your usage behavior is <strong>not</strong> tracked.</p>
     </div>
   </div>
 
